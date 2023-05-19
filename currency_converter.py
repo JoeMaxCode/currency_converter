@@ -75,7 +75,7 @@ def currency():
 			user_input = float(f"{user_input:.2f}")
 			s_entry.insert(0, f"{user_input:,}")
 
-	"""JAPANESE YEN"""
+	"""JAPANESE YEN COMBINATIONS"""
 	if curr1.get() == "Japanese Yen" or curr2.get() == "Japanese Yen":
 		# Canadian Dollar
 		if (curr1.get() == "Japanese Yen" and curr2.get() == "Canadian Dollar" or 
