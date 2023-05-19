@@ -113,12 +113,6 @@ def currency():
 			user_input = float(f"{user_input:.2f}")
 			s_entry.insert(0, f"{user_input:,}")
 
-	
-
-
-
-
-	
 
 currencies = [
 "US Dollar",
@@ -151,9 +145,5 @@ button.place(anchor='center', relx=.5, rely=.85)
 
 label = tk.Label(win, text='')
 label.place(anchor='center', relx=.5, rely=.77)
-
-
-
-
 
 win.mainloop()
