@@ -8,111 +8,38 @@ title = tk.Label(win, text="Currency Converter", font=("Ariel", 25))
 title.place(anchor="center", relx=.5, rely=.2)
 
 
-def check_valid():
+def check_valid(curr):
 	s_entry.delete(first=0, last=20)
-	if curr1.get() == curr2.get():
+	
+	if curr1.get() == '' or curr2.get() == '':
+		label.config(text='A CURRENCY HAS YET TO BE SELECTED')
+	elif curr1.get() == curr2.get():
 		label.config(text='BOTH CURRENCIES ARE THE SAME')
 	else:
 		try:
 			int(f_entry.get())
 			label.config(text="TRANSFER COMPLETE")
-			currency()
+			currency_exchange(curr)
 		except ValueError:
 			label.config(text="NOT A VALID ENTRY")
 
-def currency():
-	"""US DOLLAR COMBINATIONS"""
-	if curr1.get() == "US Dollar" or curr2.get() == "US Dollar":
-		# Canadian Dollar
-		if (curr1.get() == "US Dollar" and curr2.get() == "Canadian Dollar" or 
-			curr1.get() == "Canadian Dollar" and curr2.get() == "US Dollar") :
-			rate = 1.34725
-		# Japanese Yen
-		elif (curr1.get() == "US Dollar" and curr2.get() == "Japanese Yen" or 
-			curr1.get() == "Japanese Yen" and curr2.get() == "US Dollar") :
-			rate = 137.083
-		# Australian Dollar
-		elif (curr1.get() == "US Dollar" and curr2.get() == "Australian Dollar" or 
-			curr1.get() == "Australian Dollar" and curr2.get() == "US Dollar") :
-			rate = 1.50238
-		# Cuban Peso
-		elif (curr1.get() == "US Dollar" and curr2.get() == "Cuban Peso" or 
-			curr1.get() == "Cuban Peso" and curr2.get() == "US Dollar") :
-			rate = 25	
-
-		user_input = int(f_entry.get())
-		if curr1.get() == "US Dollar":
-			user_input = user_input*rate
-			user_input = float(f"{user_input:.2f}")
-			s_entry.insert(0, f"{user_input:,}")
+def currency_exchange(rates):
+	usrInput = int(f_entry.get())
+	base_curr = curr1.get()
+	to_curr = curr2.get()
+	output = 0.0 
+	if base_curr != "US Dollar" or to_curr != "US Dollar":
+		output = usrInput/rates[base_curr]
+		output = output * rates[to_curr]
+		output = float(f"{output:.2f}")
+		s_entry.insert(0, f"{output:,}")
+	else:
+		if base_curr == "US Dollar":
+			output = usrInput * rates[to_curr]
 		else:
-			user_input = user_input/rate
-			user_input = float(f"{user_input:.2f}")
-			s_entry.insert(0, f"{user_input:,}")
-
-	"""CUBAN PESO COMBINATIONS"""
-	if curr1.get() == "Cuban Peso" or curr2.get() == "Cuban Peso":
-		# Canadian Dollar
-		if (curr1.get() == "Cuban Peso" and curr2.get() == "Canadian Dollar" or 
-			curr1.get() == "Canadian Dollar" and curr2.get() == "Cuban Peso") :
-			rate = 0.05389
-		# Australian Dollar
-		if (curr1.get() == "Cuban Peso" and curr2.get() == "Australian Dollar" or 
-			curr1.get() == "Australian Dollar" and curr2.get() == "Cuban Peso") :
-			rate = 0.0601
-		# Japanese Yen
-		if (curr1.get() == "Cuban Peso" and curr2.get() == "Japanese Yen" or 
-			curr1.get() == "Japanese Yen" and curr2.get() == "Cuban Peso") :
-			rate = 5.48334
-
-		user_input = int(f_entry.get())
-		if curr1.get() == "Cuban Peso":
-			user_input = user_input*rate
-			user_input = float(f"{user_input:.2f}")
-			s_entry.insert(0, f"{user_input:,}")
-		else:
-			user_input = user_input/rate
-			user_input = float(f"{user_input:.2f}")
-			s_entry.insert(0, f"{user_input:,}")
-
-	"""JAPANESE YEN COMBINATIONS"""
-	if curr1.get() == "Japanese Yen" or curr2.get() == "Japanese Yen":
-		# Canadian Dollar
-		if (curr1.get() == "Japanese Yen" and curr2.get() == "Canadian Dollar" or 
-			curr1.get() == "Canadian Dollar" and curr2.get() == "Japanese Yen") :
-			rate = 0.00983
-		# Australian Dollar
-		if (curr1.get() == "Japanese Yen" and curr2.get() == "Australian Dollar" or 
-			curr1.get() == "Australian Dollar" and curr2.get() == "Japanese Yen") :
-			rate = 0.01096
-
-		user_input = int(f_entry.get())
-		if curr1.get() == "Japanese Yen":
-			user_input = user_input*rate
-			user_input = float(f"{user_input:.2f}")
-			s_entry.insert(0, f"{user_input:,}")
-		else:
-			user_input = user_input/rate
-			user_input = float(f"{user_input:.2f}")
-			s_entry.insert(0, f"{user_input:,}")
-
-	""" AUSTRALIAN COMBINATIONS """
-	if curr1.get() == "Australian Dollar" or curr2.get() == "Australian Dollar":
-		# Canadian Dollar
-		if (curr1.get() == "Australian Dollar" and curr2.get() == "Canadian Dollar" or 
-			curr1.get() == "Canadian Dollar" and curr2.get() == "Australian Dollar") :
-			rate = 0.89655
-
-		user_input = int(f_entry.get())
-		if curr1.get() == "Australian Dollar":
-			user_input = user_input*rate
-			user_input = float(f"{user_input:.2f}")
-			s_entry.insert(0, f"{user_input:,}")
-		else:
-			user_input = user_input/rate
-			user_input = float(f"{user_input:.2f}")
-			s_entry.insert(0, f"{user_input:,}")
-
+			output = usrInput / rates[to_curr]
+		output = float(f"{output:.2f}")
+		s_entry.insert(0, f"{output:,}")
 
 currencies = [
 "US Dollar",
@@ -121,6 +48,15 @@ currencies = [
 "Australian Dollar",
 "Cuban Peso"
 ]
+
+# This program treat US Dollar as the base/standard currency
+rates_dict = {
+	"US Dollar": 1,
+	"Japanese Yen": 137.97,
+	"Canadian Dollar": 1.35,
+	"Australian Dollar": 1.50,
+	"Cuban Peso": 23.94
+}
 
 """ FIRST CURRENCY SLOT """
 curr1 = tk.StringVar()
@@ -140,7 +76,7 @@ s_entry.place(anchor='center', relx=.7, rely=.65)
 
 
 # Convert Button
-button = tk.Button(win, text="Convert", command=check_valid)
+button = tk.Button(win, text="Convert", command=lambda:check_valid(rates_dict))
 button.place(anchor='center', relx=.5, rely=.85)
 
 label = tk.Label(win, text='')
