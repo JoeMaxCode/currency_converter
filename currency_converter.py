@@ -7,7 +7,6 @@ win.title("Currency Converter")
 title = tk.Label(win, text="Currency Converter", font=("Ariel", 25))
 title.place(anchor="center", relx=.5, rely=.2)
 
-
 def check_valid(curr):
 	s_entry.delete(first=0, last=20)
 	
@@ -36,10 +35,9 @@ def currency_exchange(rates):
 			output = usrInput * rates[to_curr]
 		else:
 			output = usrInput / rates[to_curr]
-			
+
 		output = float(f"{output:.2f}")
 		s_entry.insert(0, f"{output:,}")
-
 
 currencies = [
 "US Dollar",
@@ -73,7 +71,6 @@ second_curr.place(anchor='center', relx=.7, rely=.5)
 
 s_entry = tk.Entry(win, font=('Ariel', 17))
 s_entry.place(anchor='center', relx=.7, rely=.65)
-
 
 # Convert Button
 button = tk.Button(win, text="Convert", command=lambda:check_valid(rates_dict))
