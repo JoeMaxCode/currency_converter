@@ -36,8 +36,8 @@ def currency_exchange(rates):
 		else:
 			output = usrInput / rates[to_curr]
 
-		output = float(f"{output:.2f}")
-		s_entry.insert(0, f"{output:,}")
+	output = float(f"{output:.2f}")
+	s_entry.insert(0, f"{output:,}")
 
 currencies = [
 "US Dollar",
